@@ -90,7 +90,8 @@ def convert_tens(n):
 
 
 # Return list cardinal numeral words from number of hundreds
-def convert_hundreds(n):
+def convert_hundreds(n, region = 'north'):
+    reg = {'north': ONES1, 'south': ONES2}
     res = []
     res = res + convert_units(n // 100)
     res.append(HUNDREDS)
@@ -99,17 +100,22 @@ def convert_hundreds(n):
         if n % 100 >= 10:
             res = res + convert_tens(n % 100)
         else:
-            res.append(ONES1)
+            res.append(reg[region])
             res = res + convert_units(n % 100)
     return res
 
 
 # Waypoint 1
-def integer_to_vietnamese_numeral(n, activate_tts = False):
+def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
+    reg = {'north': THOUSANDS1, 'south': THOUSANDS2}
     if (type(activate_tts) is not bool) and (type(activate_tts) is not None):
         raise TypeError('Argument "activate_tts" is not a boolean')
     if activate_tts is None:
         activate_tts = False
+    if type(region) != str:
+        raise TypeError('Argument "region" is not a string')
+    if not region in reg:
+        raise ValueError('Argument "region" has not a correct value')
 
     res = []
     # Catch exceptions
@@ -125,25 +131,25 @@ def integer_to_vietnamese_numeral(n, activate_tts = False):
         if n // i > 0:
             if len(res) == 0:
                 if n // i >= 100:
-                    res = res + convert_hundreds(n // i)
+                    res = res + convert_hundreds(n // i, region)
                 elif n // i >= 10:
                     res = res + convert_tens(n // i)
                 else:
                     res = res + convert_units(n // i)
             else:
-                res = res + convert_hundreds(n // i)
+                res = res + convert_hundreds(n // i, region)
 
             if i == 1000000000:
                 res.append(BILLIONS)
             elif i == 1000000:
                 res.append(MILLIONS)
             elif i == 1000:
-                res.append(THOUSANDS1)
+                res.append(reg[region])
 
             n = n % i
 
     if not activate_tts:
-        return res
+        return ' '.join(res)
     else:
         import pygame
         pygame.init()
@@ -152,6 +158,6 @@ def integer_to_vietnamese_numeral(n, activate_tts = False):
             sound.play(maxtime = 2200)
             print("../sounds/vie/north/" + word + ".ogg")
             pygame.time.delay(400)
-        return res
+        return ' '.join(res)
 
 ##################################################################
