@@ -155,9 +155,96 @@ def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
         pygame.init()
         for word in res:
             sound = pygame.mixer.Sound("../sounds/vie/" + str(region) + "/" + word + ".ogg")
-            sound.play(maxtime = 2200)
+            sound.play(maxtime = 3000)
             print("../sounds/vie/" + str(region) + "/" + word + ".ogg")
-            pygame.time.delay(400)
+            pygame.time.delay(500)
         return ' '.join(res)
 
 ##################################################################
+
+def convert_from_0_to_99(n):
+    if n < 20:
+        switcher = {
+                0: "zero",
+                1: "one",
+                2: "two",
+                3: "three",
+                4: "four",
+                5: "five",
+                6: "six",
+                7: "seven",
+                8: "eight",
+                9: "nine",
+                10: "ten",
+                11: "eleven",
+                12: "twelve",
+                13: "thirteen",
+                14: "fourteen",
+                15: "fifteen",
+                16: "sixteen",
+                17: "seventeen",
+                18: "eighteen",
+                19: "nineteen"
+        }
+        return switcher[n]
+    else:
+        switcher = {
+                2: "twenty",
+                3: "thirty",
+                4: "forty",
+                5: "fifty",
+                6: "sixty",
+                7: "seventy",
+                8: "eighty",
+                9: "ninety"
+        }
+
+        if n % 10 == 0:
+            res = switcher[n // 10]
+        else:
+            res = switcher[n // 10] + "-" + convert_from_0_to_99(n % 10)
+
+        return res
+
+
+def convert_hundreds_en(n):
+    res = []
+
+    if n < 100:
+        res.append(convert_from_0_to_99(n))
+    else:
+        res.append(convert_from_0_to_99(n // 100))
+        res.append("hundred")
+
+        if n % 100 != 0:
+            res.append("and")
+            res.append(convert_from_0_to_99(n % 100))
+
+    return res
+
+
+def integer_to_english_numeral(n):
+    if type(n) is not int:
+        raise TypeError("Not an integer")
+    if n < 0:
+        raise ValueError("Not a positive integer")
+
+    res = []
+    list_divisor = (1000000000, 1000000, 1000, 1)
+    for i in list_divisor:
+        if n // i > 0:
+            res = res + convert_hundreds_en(n // i)
+
+            if i == 1000000000:
+                res.append("billion")
+            elif i == 1000000:
+                res.append("million")
+            elif i == 1000:
+                res.append("thousand")
+
+            if n % i != 0:
+                res.append("and")
+
+            n = n % i
+
+    return ' '.join(res)
