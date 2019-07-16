@@ -286,7 +286,10 @@ def convert_hundreds_en(n):
     return res
 
 
+<<<<<<< HEAD
 def integer_to_english_numeral(n, activate_tts = False):
+=======
+def integer_to_english_numeral(n):
     """
     Returns a string corresponding to the English cardinal numeral of this number. 
 
@@ -297,6 +300,8 @@ def integer_to_english_numeral(n, activate_tts = False):
     Returns:
     res (str): a string corresponding to English cardinal numeral of a number.
     """
+
+>>>>>>> document_code
     if type(n) is not int:
         raise TypeError("Not an integer")
     if n < 0:
@@ -330,23 +335,23 @@ def integer_to_english_numeral(n, activate_tts = False):
     if not activate_tts:
         return ' '.join(res)
     else:
-        import pygame
-        pygame.init()
+        # import pygame
+        # pygame.init()
         for word in res:
             if word.find('-') == -1:
-                sound = pygame.mixer.Sound("../sounds/en/" + word + ".ogg")
-                sound.play()
+                # sound = pygame.mixer.Sound("../sounds/en/" + word + ".ogg")
+                # sound.play(maxtime = 3000)
                 print("../sounds/en/" + word + ".ogg")
-                pygame.time.delay(800)
+                # pygame.time.delay(500)
             else:
-                sound = pygame.mixer.Sound("../sounds/en/" + word[: word.find('-')] + ".ogg")
-                sound.play(maxtime = 500)
+                # sound = pygame.mixer.Sound("../sounds/en/" + word[: word.find('-')] + ".ogg")
+                # sound.play(maxtime = 3000)
                 print("../sounds/en/" + word[0 : word.find('-')] + ".ogg")
-                pygame.time.delay(400)
+                # pygame.time.delay(500)
 
-                sound = pygame.mixer.Sound("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
-                sound.play(maxtime = 400)
+                # sound = pygame.mixer.Sound("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
+                # sound.play(maxtime = 3000)
                 print("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
-                pygame.time.delay(800)
+                # pygame.time.delay(500)
 
         return ' '.join(res)
