@@ -223,11 +223,18 @@ def convert_hundreds_en(n):
     return res
 
 
-def integer_to_english_numeral(n):
+def integer_to_english_numeral(n, activate_tts = False):
     if type(n) is not int:
         raise TypeError("Not an integer")
     if n < 0:
         raise ValueError("Not a positive integer")
+    if n > 999999999999:
+        raise Overflow("Integer greater than 999,999,999,999")
+
+    if (type(activate_tts) is not bool) and (type(activate_tts) is not None):
+        raise TypeError('Argument "activate_tts" is not a boolean')
+    if activate_tts is None:
+        activate_tts = False
 
     res = []
     list_divisor = (1000000000, 1000000, 1000, 1)
@@ -247,4 +254,26 @@ def integer_to_english_numeral(n):
 
             n = n % i
 
-    return ' '.join(res)
+    if not activate_tts:
+        return ' '.join(res)
+    else:
+        # import pygame
+        # pygame.init()
+        for word in res:
+            if word.find('-') == -1:
+                # sound = pygame.mixer.Sound("../sounds/en/" + word + ".ogg")
+                # sound.play(maxtime = 3000)
+                print("../sounds/en/" + word + ".ogg")
+                # pygame.time.delay(500)
+            else:
+                # sound = pygame.mixer.Sound("../sounds/en/" + word[: word.find('-')] + ".ogg")
+                # sound.play(maxtime = 3000)
+                print("../sounds/en/" + word[0 : word.find('-')] + ".ogg")
+                # pygame.time.delay(500)
+
+                # sound = pygame.mixer.Sound("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
+                # sound.play(maxtime = 3000)
+                print("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
+                # pygame.time.delay(500)
+
+        return ' '.join(res)
