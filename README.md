@@ -194,7 +194,7 @@ For example:
 >>> integer_to_english_numeral(101)
 'one hundred and one'
 >>> integer_to_english_numeral(405)
-'four hundred five'
+'four hundred and five'
 >>> integer_to_english_numeral(1971)
 'one thousand and nine hundred and seventy-one'
 >>> integer_to_english_numeral(5061)
