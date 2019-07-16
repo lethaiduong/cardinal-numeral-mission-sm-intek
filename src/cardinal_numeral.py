@@ -35,7 +35,7 @@ def convert_units(n):
     n (int): n is a number between 1 and 9.
 
     Returns:
-    res (list): res has 1 element, pronounce a number between 1 and 9
+    res (list): res has 1 element, pronounce a number between 1 and 9.
     """
 
     res = []
@@ -87,7 +87,7 @@ def convert_tens(n):
     # Convert digit of units
     # n % 10 != 0, so digit of units is from 1 to 9
     if n % 10 != 0:
-        # n % 10 != 1, so so digit of units is from 2 to 9
+        # n % 10 != 1, so digit of units is from 2 to 9
         if n % 10 != 1:
             switcher = {
                     2: NUMERAL_TWO,
@@ -114,11 +114,11 @@ def convert_hundreds(n, region = 'north'):
     Return list cardinal numeral words from number of hundreds.
 
     Parameters:
-    n (int): n is a number between 100 and 999.
+    n (int): n is a number between 100 and 999, (can get value less than 100 to pronounce "khong tram").
     region (str): region is 'north' or 'south'.
 
     Returns:
-    res (list): res have many element, pronounce a number between 100 and 999.
+    res (list): res have many element, pronounce a number between 100 and 999 (or less than 100 to pronounce "khong tram").
     """
 
     # waypoint 2, linh in north, lẻ in south
@@ -292,10 +292,10 @@ def integer_to_english_numeral(n):
 
     Parameters:
     n (int): n is a number.
+    activate_tts (bool): True with sound, False without sound.
 
     Returns:
     res (str): a string corresponding to English cardinal numeral of a number.
-    activate_tts (bool): True with sound, False without sound.
     """
 
     if type(n) is not int:
