@@ -198,9 +198,9 @@ def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
         pygame.init()
         for word in res:
             sound = pygame.mixer.Sound("../sounds/vie/" + str(region) + "/" + word + ".ogg")
-            sound.play(maxtime = 3000)
+            sound.play()
             print("../sounds/vie/" + str(region) + "/" + word + ".ogg")
-            pygame.time.delay(500)
+            pygame.time.delay(600)
         return ' '.join(res)
 
 ##################################################################

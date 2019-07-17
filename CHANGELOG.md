@@ -10,4 +10,10 @@ Version 0.1 2019-07-16
 Version 0.2 2019-07-17
 ```````````````````````
 
-- Fix time play audio to pronunce quite better
+- Fix timeplay audio to pronunce quite better
+
+
+Version 0.3 2019-07-17
+```````````````````````
+
+- Replace south audio set
