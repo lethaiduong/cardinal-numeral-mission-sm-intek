@@ -337,16 +337,16 @@ def integer_to_english_numeral(n, activate_tts = False):
                 sound = pygame.mixer.Sound("../sounds/en/" + word + ".ogg")
                 sound.play()
                 print("../sounds/en/" + word + ".ogg")
-                pygame.time.delay(800)
+                pygame.time.delay(600)
             else:
                 sound = pygame.mixer.Sound("../sounds/en/" + word[: word.find('-')] + ".ogg")
                 sound.play(maxtime = 500)
                 print("../sounds/en/" + word[0 : word.find('-')] + ".ogg")
-                pygame.time.delay(400)
+                pygame.time.delay(600)
 
                 sound = pygame.mixer.Sound("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
                 sound.play(maxtime = 400)
                 print("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
-                pygame.time.delay(800)
+                pygame.time.delay(600)
 
         return ' '.join(res)
