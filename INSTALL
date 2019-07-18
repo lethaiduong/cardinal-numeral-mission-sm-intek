@@ -1,0 +1,21 @@
+Before you compile this package, make sure you had Pip3 and installed Pipenv
+
+	Ref: https://docs.pipenv.org/en/latest/install/
+
+The simplest way to compile this package is:
+
+1. On your terminal, 'cd' to the directory containing source code
+
+	$ cd dat_quan/src
+
+
+2. Launching Pipenv to add automatically missing package to your local.
+
+   (In this package, we used pygame library to play audio)
+
+	$ pipenv shell --three
+
+
+3. Creating a new python code file in 'src', import cardinal_numeral library and use it
+
+	import cardinal_numeral
