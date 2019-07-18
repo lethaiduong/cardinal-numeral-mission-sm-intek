@@ -22,3 +22,10 @@ Features:
 
     - Generate north and south Vietnamese cardinal numeral of number and text-to-speech it
     - Generate English cardinal numeral of number and text-to-speech it
+
+
+## Version 1.1 2019-07-19 (Release)
+
+Fix:
+
+    - Corrected name file 'forty.ogg'

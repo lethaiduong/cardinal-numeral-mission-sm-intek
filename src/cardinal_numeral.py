@@ -351,6 +351,7 @@ def integer_to_english_numeral(n, activate_tts = False):
     else:
         import pygame
         pygame.init()
+        pygame.mixer.init()
         for word in cardinal_numeral_list:
             if word.find('-') == -1:
                 sound = pygame.mixer.Sound("../sounds/en/" + word + ".ogg")
