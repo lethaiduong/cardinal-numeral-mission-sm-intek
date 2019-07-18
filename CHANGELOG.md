@@ -29,3 +29,10 @@ Features:
 Fix:
 
     - Corrected name file 'forty.ogg'
+
+
+## Version 1.2 2019-07-19 (Release)
+
+    Fix:
+
+        - Fixed code in function integer_to_english_numeral()
