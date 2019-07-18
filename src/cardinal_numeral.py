@@ -37,10 +37,10 @@ def convert_units(n):
         n (int): n is a number from 0 to 9.
 
     Returns:
-        cardinal_numberal_list (list): list of cardinal numeral words.
+        cardinal_numeral_list (list): list of cardinal numeral words.
     """
 
-    cardinal_numberal_list = []
+    cardinal_numeral_list = []
     switcher = {
             0: NUMERAL_ZERO,
             1: NUMERAL_ONE1,
@@ -53,9 +53,9 @@ def convert_units(n):
             8: NUMERAL_EIGHT,
             9: NUMERAL_NINE
     }
-    cardinal_numberal_list.append(switcher[n])
+    cardinal_numeral_list.append(switcher[n])
 
-    return cardinal_numberal_list
+    return cardinal_numeral_list
 
 
 def convert_tens(n):
@@ -66,15 +66,15 @@ def convert_tens(n):
         n (int): n is a number from 10 to 99.
 
     Returns:
-        cardinal_numberal_list (list): list of cardinal numeral words
+        cardinal_numeral_list (list): list of cardinal numeral words
     """
 
-    cardinal_numberal_list = []
+    cardinal_numeral_list = []
 
     # Converting digit of tens
     # In case digit is 1
     if n // 10 == 1:
-        cardinal_numberal_list.append(NUMERAL_TEN1)
+        cardinal_numeral_list.append(NUMERAL_TEN1)
     # In case digit from 2 to 9
     else:
         switcher = {
@@ -87,8 +87,8 @@ def convert_tens(n):
                 8: NUMERAL_EIGHT,
                 9: NUMERAL_NINE
         }
-        cardinal_numberal_list.append(switcher[n // 10])
-        cardinal_numberal_list.append(NUMERAL_TEN2)
+        cardinal_numeral_list.append(switcher[n // 10])
+        cardinal_numeral_list.append(NUMERAL_TEN2)
 
     # Convert digit of units
     if n % 10 != 0:
@@ -104,15 +104,15 @@ def convert_tens(n):
                     8: NUMERAL_EIGHT,
                     9: NUMERAL_NINE
             }
-            cardinal_numberal_list.append(switcher[n % 10])
+            cardinal_numeral_list.append(switcher[n % 10])
         # Digit is 1
         else:
             if n // 10 == 1:
-                cardinal_numberal_list.append(NUMERAL_ONE1)
+                cardinal_numeral_list.append(NUMERAL_ONE1)
             else:
-                cardinal_numberal_list.append(NUMERAL_ONE2)
+                cardinal_numeral_list.append(NUMERAL_ONE2)
 
-    return cardinal_numberal_list
+    return cardinal_numeral_list
 
 
 def convert_hundreds(n, region = 'north'):
@@ -124,22 +124,22 @@ def convert_hundreds(n, region = 'north'):
         region (str): region is 'north' or 'south'.
 
     Returns:
-        cardinal_numberal_list (list): list of cardinal numeral words.
+        cardinal_numeral_list (list): list of cardinal numeral words.
     """
 
     reg = {'north': ONES1, 'south': ONES2}
-    cardinal_numberal_list = []
-    cardinal_numberal_list += convert_units(n // 100)
-    cardinal_numberal_list.append(HUNDREDS)
+    cardinal_numeral_list = []
+    cardinal_numeral_list += convert_units(n // 100)
+    cardinal_numeral_list.append(HUNDREDS)
 
     if n % 100 != 0:
         if n % 100 >= 10:
-            cardinal_numberal_list += convert_tens(n % 100)
+            cardinal_numeral_list += convert_tens(n % 100)
         else:
-            cardinal_numberal_list.append(reg[region])
-            cardinal_numberal_list += convert_units(n % 100)
+            cardinal_numeral_list.append(reg[region])
+            cardinal_numeral_list += convert_units(n % 100)
 
-    return cardinal_numberal_list
+    return cardinal_numeral_list
 
 
 def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
@@ -148,7 +148,7 @@ def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
 
     Parameters:
         n (int): n is a number from 0 to 999,999,999,999.
-        region (str): region gets 'north' or 'south' to generate north or south Vietnamese cardinal numberal.
+        region (str): region gets 'north' or 'south' to generate north or south Vietnamese cardinal numeral.
         activate_tts (bool): activate_tts gets True or False to say it or not.
 
     Returns:
@@ -173,47 +173,47 @@ def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
     if n > 999999999999:
         raise Overflow("Integer greater than 999,999,999,999")
 
-    cardinal_numberal_list = []
+    cardinal_numeral_list = []
     # Devide n to many set of three numbers
     list_divisor = (1000000000, 1000000, 1000, 1)
     for i in list_divisor:
         # If set of three numbers has any number is not zero
         if n // i > 0:
             # Saying if it is the first set of three numbers
-            if len(cardinal_numberal_list) == 0:
+            if len(cardinal_numeral_list) == 0:
                 if n // i >= 100:
-                    cardinal_numberal_list += convert_hundreds(n // i, region)
+                    cardinal_numeral_list += convert_hundreds(n // i, region)
                 elif n // i >= 10:
-                    cardinal_numberal_list += convert_tens(n // i)
+                    cardinal_numeral_list += convert_tens(n // i)
                 else:
-                    cardinal_numberal_list += convert_units(n // i)
+                    cardinal_numeral_list += convert_units(n // i)
             # Saying if it is NOT the first set of three numbers
             else:
-                cardinal_numberal_list += convert_hundreds(n // i, region)
+                cardinal_numeral_list += convert_hundreds(n // i, region)
 
             # Adding place-value for set of three numbers
             if i == 1000000000:
-                cardinal_numberal_list.append(BILLIONS)
+                cardinal_numeral_list.append(BILLIONS)
             elif i == 1000000:
-                cardinal_numberal_list.append(MILLIONS)
+                cardinal_numeral_list.append(MILLIONS)
             elif i == 1000:
-                cardinal_numberal_list.append(reg[region])
+                cardinal_numeral_list.append(reg[region])
 
             # Removing set of three numbers converted
             n = n % i
 
     # Check activate_tts
     if not activate_tts:
-        return ' '.join(cardinal_numberal_list)
+        return ' '.join(cardinal_numeral_list)
     else:
         import pygame
         pygame.init()
-        for word in cardinal_numberal_list:
+        for word in cardinal_numeral_list:
             sound = pygame.mixer.Sound("../sounds/vie/" + str(region) + "/" + word + ".ogg")
             sound.play()
             print("../sounds/vie/" + str(region) + "/" + word + ".ogg")
             pygame.time.delay(600)
-        return ' '.join(cardinal_numberal_list)
+        return ' '.join(cardinal_numeral_list)
 
 
 ################################################################################################################
@@ -282,22 +282,22 @@ def convert_hundreds_en(n):
         n (int): n is a number from 100 to 999.
 
     Returns:
-        cardinal_numberal_list (list): a list of words corresponding to English cardinal numeral of a number.
+        cardinal_numeral_list (list): a list of words corresponding to English cardinal numeral of a number.
     """
 
-    cardinal_numberal_list = []
+    cardinal_numeral_list = []
 
     if n < 100:
-        cardinal_numberal_list.append(convert_from_0_to_99(n))
+        cardinal_numeral_list.append(convert_from_0_to_99(n))
     else:
-        cardinal_numberal_list.append(convert_from_0_to_99(n // 100))
-        cardinal_numberal_list.append("hundred")
+        cardinal_numeral_list.append(convert_from_0_to_99(n // 100))
+        cardinal_numeral_list.append("hundred")
 
         if n % 100 != 0:
-            cardinal_numberal_list.append("and")
-            cardinal_numberal_list.append(convert_from_0_to_99(n % 100))
+            cardinal_numeral_list.append("and")
+            cardinal_numeral_list.append(convert_from_0_to_99(n % 100))
 
-    return cardinal_numberal_list
+    return cardinal_numeral_list
 
 
 def integer_to_english_numeral(n, activate_tts = False):
@@ -309,7 +309,7 @@ def integer_to_english_numeral(n, activate_tts = False):
         activate_tts (bool): True with sound, False without sound.
 
     Returns:
-        cardinal_numberal_list (list): a list of words corresponding to English cardinal numeral of a number.
+        cardinal_numeral_list (list): a list of words corresponding to English cardinal numeral of a number.
     """
 
     if type(n) is not int:
@@ -324,34 +324,34 @@ def integer_to_english_numeral(n, activate_tts = False):
     if activate_tts is None:
         activate_tts = False
 
-    cardinal_numberal_list = []
+    cardinal_numeral_list = []
     # Devide n to many set of three numbers
     list_divisor = (1000000000, 1000000, 1000, 1)
     for i in list_divisor:
         # If set of three numbers has any number is not zero
         if n // i > 0:
-            cardinal_numberal_list += convert_hundreds_en(n // i)
+            cardinal_numeral_list += convert_hundreds_en(n // i)
 
             # Adding place-value for set of three numbers
             if i == 1000000000:
-                cardinal_numberal_list.append("billion")
+                cardinal_numeral_list.append("billion")
             elif i == 1000000:
-                cardinal_numberal_list.append("million")
+                cardinal_numeral_list.append("million")
             elif i == 1000:
-                cardinal_numberal_list.append("thousand")
+                cardinal_numeral_list.append("thousand")
 
             if n % i != 0:
-                cardinal_numberal_list.append("and")
+                cardinal_numeral_list.append("and")
 
             # Removing set of three numbers converted
             n = n % i
 
     if not activate_tts:
-        return ' '.join(cardinal_numberal_list)
+        return ' '.join(cardinal_numeral_list)
     else:
         import pygame
         pygame.init()
-        for word in cardinal_numberal_list:
+        for word in cardinal_numeral_list:
             if word.find('-') == -1:
                 sound = pygame.mixer.Sound("../sounds/en/" + word + ".ogg")
                 sound.play()
@@ -368,4 +368,4 @@ def integer_to_english_numeral(n, activate_tts = False):
                 print("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
                 pygame.time.delay(600)
 
-        return ' '.join(cardinal_numberal_list)
+        return ' '.join(cardinal_numeral_list)
