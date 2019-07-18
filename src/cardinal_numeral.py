@@ -227,7 +227,7 @@ def convert_from_0_to_99(n):
         n (int): n is a number from 0 to 99.
 
     Returns:
-        res (str): a string corresponding to English cardinal numeral of a number.
+        (str): a string corresponding to English cardinal numeral of a number.
     """
 
     if n < 20:
@@ -267,11 +267,9 @@ def convert_from_0_to_99(n):
         }
 
         if n % 10 == 0:
-            res = switcher[n // 10]
-        else:
-            res = switcher[n // 10] + "-" + convert_from_0_to_99(n % 10)
+            return switcher[n // 10]
 
-        return res
+        return switcher[n // 10] + "-" + convert_from_0_to_99(n % 10)
 
 
 def convert_hundreds_en(n):
