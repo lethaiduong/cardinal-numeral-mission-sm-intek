@@ -1,3 +1,6 @@
+# Defined path to audio's directory
+SOUNDS_PATH    =   "../sounds/"
+
 # Defined numbers
 NUMERAL_ZERO    =   "không"
 NUMERAL_ONE1    =   "một"
@@ -27,6 +30,17 @@ class Overflow(Exception):
     Integer greater than 999,999,999,999
     """
     pass
+
+
+def pronounce_word(path):
+    """
+    Function to play audio file from path directory
+    """
+    import pygame
+    pygame.init()
+    sound = pygame.mixer.Sound(path)
+    sound.play()
+    pygame.time.delay(600)
 
 
 def convert_units(n):
@@ -161,7 +175,7 @@ def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
         activate_tts = False
 
     reg = {'north': THOUSANDS1, 'south': THOUSANDS2}
-    if type(region) != str:
+    if type(region) is not str:
         raise TypeError('Argument "region" is not a string')
     if not region in reg:
         raise ValueError('Argument "region" has not a correct value')
@@ -202,18 +216,16 @@ def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
             # Removing set of three numbers converted
             n = n % i
 
+    # If cardinal_numeral_list still empty, this is in case n = 0
+    cardinal_numeral_list += convert_units(0)
+
     # Check activate_tts
-    if not activate_tts:
-        return ' '.join(cardinal_numeral_list)
-    else:
-        import pygame
-        pygame.init()
+    if activate_tts:
         for word in cardinal_numeral_list:
-            sound = pygame.mixer.Sound("../sounds/vie/" + str(region) + "/" + word + ".ogg")
-            sound.play()
-            print("../sounds/vie/" + str(region) + "/" + word + ".ogg")
-            pygame.time.delay(600)
-        return ' '.join(cardinal_numeral_list)
+            pronounce_word(SOUNDS_PATH + 'vie/' + region + "/" + word + ".ogg")
+            print(SOUNDS_PATH + 'vie/' + region + "/" + word + ".ogg")
+
+    return ' '.join(cardinal_numeral_list)
 
 
 ################################################################################################################
@@ -274,7 +286,7 @@ def convert_from_0_to_99(n):
 
 def convert_hundreds_en(n):
     """
-    Returns a string corresponding to a number between 100 and 999.
+    Returns a string corresponding to a number from 100 to 999
  
     Parameters:
         n (int): n is a number from 100 to 999.
@@ -344,27 +356,21 @@ def integer_to_english_numeral(n, activate_tts = False):
             # Removing set of three numbers converted
             n = n % i
 
-    if not activate_tts:
-        return ' '.join(cardinal_numeral_list)
-    else:
-        import pygame
-        pygame.init()
-        pygame.mixer.init()
+    # If cardinal_numeral_list still empty, this is in case n = 0
+    cardinal_numeral_list.append(convert_from_0_to_99(0))
+
+    if activate_tts:
         for word in cardinal_numeral_list:
             if word.find('-') == -1:
-                sound = pygame.mixer.Sound("../sounds/en/" + word + ".ogg")
-                sound.play()
-                print("../sounds/en/" + word + ".ogg")
-                pygame.time.delay(600)
+                pronounce_word(SOUNDS_PATH + "en/" + word + ".ogg")
+                print(SOUNDS_PATH + "en/" + word + ".ogg")
             else:
-                sound = pygame.mixer.Sound("../sounds/en/" + word[: word.find('-')] + ".ogg")
-                sound.play()
-                print("../sounds/en/" + word[0 : word.find('-')] + ".ogg")
-                pygame.time.delay(600)
+                # Play sound before '-'
+                pronounce_word(SOUNDS_PATH + "en/" + word[: word.find('-')] + ".ogg")
+                print(SOUNDS_PATH + "en/" + word[: word.find('-')] + ".ogg")
 
-                sound = pygame.mixer.Sound("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
-                sound.play()
-                print("../sounds/en/" + word[word.find('-') + 1 :] + ".ogg")
-                pygame.time.delay(600)
+                # Play sound after '-'
+                pronounce_word(SOUNDS_PATH + "en/" + word[word.find('-') + 1 :] + ".ogg")
+                print(SOUNDS_PATH + "en/" + word[word.find('-') + 1 :] + ".ogg")
 
-        return ' '.join(cardinal_numeral_list)
+    return ' '.join(cardinal_numeral_list)
