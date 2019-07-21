@@ -217,7 +217,8 @@ def integer_to_vietnamese_numeral(n, region = 'north', activate_tts = False):
             n = n % i
 
     # If cardinal_numeral_list still empty, this is in case n = 0
-    cardinal_numeral_list += convert_units(0)
+    if len(cardinal_numeral_list) == 0:
+        cardinal_numeral_list += convert_units(0)
 
     # Check activate_tts
     if activate_tts:
@@ -357,7 +358,8 @@ def integer_to_english_numeral(n, activate_tts = False):
             n = n % i
 
     # If cardinal_numeral_list still empty, this is in case n = 0
-    cardinal_numeral_list.append(convert_from_0_to_99(0))
+    if len(cardinal_numeral_list) == 0:
+        cardinal_numeral_list.append(convert_from_0_to_99(0))
 
     if activate_tts:
         for word in cardinal_numeral_list:
